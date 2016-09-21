@@ -1,11 +1,13 @@
 package edu.bu.karunesh.ec591.flashcards;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView operator;
     private EditText answer;
     private TextView opEquals;
+    private LinearLayout op1Layout;
+    private LinearLayout ansLayout;
 
     private Boolean addition = false;
     private Boolean subtraction = false;
@@ -36,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         submitAnswer = (Button) findViewById(R.id.submitAnswer);
         cbAddition = (CheckBox) findViewById(R.id.cbAddition);
         cbSubtraction = (CheckBox) findViewById(R.id.cbSubtraction);
+        op1Layout = (LinearLayout) findViewById(R.id.op1Layout);
+        ansLayout = (LinearLayout) findViewById(R.id.ansLayout);
+        op1Layout.setBackgroundColor(Color.parseColor("#F5F5F5"));
+        ansLayout.setBackgroundColor(Color.parseColor("#F5F5F5"));
         answer = (EditText) findViewById(R.id.answer);
         submitAnswer.setEnabled(false);
         btnOperation.setEnabled(false);
@@ -64,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         cbSubtraction.setEnabled(false);
         btnOperation.setVisibility(View.INVISIBLE);
         submitAnswer.setVisibility(View.VISIBLE);
+        op1Layout.setBackgroundColor(Color.parseColor("#D2D1D1"));
+        ansLayout.setBackgroundColor(Color.parseColor("#D2D1D1"));
 
         generateQuestion();
     }

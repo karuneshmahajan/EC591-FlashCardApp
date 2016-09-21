@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:background="#d2d1d1">
+            android:id="@+id/op1Layout">
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="#d2d1d1">
+            android:id="@+id/ansLayout">
 
             <TextView
                 android:layout_width="wrap_content"
