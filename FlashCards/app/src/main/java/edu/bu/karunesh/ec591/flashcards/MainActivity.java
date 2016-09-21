@@ -7,16 +7,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btnOperation;
+    private Button submitAnswer;
     private CheckBox cbAddition;
     private CheckBox cbSubtration;
+    private TextView operand1;
+    private TextView operand2;
+    private TextView operator;
+    private EditText answer;
+    private TextView opEquals;
+
     private Boolean addition = false;
     private Boolean subtraction = false;
     private static int count = 0;
+    private static int quesCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnOperation = (Button) findViewById(R.id.btnOperation);
+        submitAnswer = (Button) findViewById(R.id.submitAnswer);
         cbAddition = (CheckBox) findViewById(R.id.cbAddition);
         cbSubtration = (CheckBox) findViewById(R.id.cbSubtraction);
+        submitAnswer.setEnabled(false);
 
     }
 
@@ -39,20 +50,65 @@ public class MainActivity extends AppCompatActivity {
         cbAddition.setEnabled(false);
         cbSubtration.setEnabled(false);
         btnOperation.setVisibility(View.INVISIBLE);
+
+        generateQuestion();
+    }
+
+    private void generateQuestion() {
+        opEquals = (TextView) findViewById(R.id.opEquals);
+        operand1 = (TextView) findViewById(R.id.operand1);
+        operand2 = (TextView) findViewById(R.id.operand2);
+        operator = (TextView)findViewById(R.id.operator);
+        answer = (EditText) findViewById(R.id.answer);
+        opEquals.setText("=");
+        answer.setEnabled(true);
+        submitAnswer.setEnabled(true);
+
+        if(addition && !subtraction){
+            operand1.setText(String.valueOf(generateRand(0,99)));
+            operand2.setText(String.valueOf(generateRand(1,99)));
+            operator.setText("+");
+
+        }else if(!addition && subtraction){
+            int first = generateRand(1,99);
+            operand1.setText(String.valueOf(first));
+            operand2.setText(String.valueOf(generateRand(0,first)));
+            operator.setText("-");
+        }else{
+            int temp = generateRand(0,99);
+
+            int numFirst  = generateRand(0,99);
+            operand1.setText(String.valueOf(numFirst));
+
+            if(temp%2==0){
+                operator.setText("+");
+                operand2.setText(String.valueOf(generateRand(1,99)));
+            }else{
+                operator.setText("-");
+                operand2.setText(String.valueOf(generateRand(0,numFirst)));
+            }
+
+        }
+    }
+
+    private int generateRand(int low, int high) {
+
+        return low + (int)(Math.random() * high);
     }
 
     public void doSubmit(View view) {
+        quesCount++;
 
-        TextView operand1 = (TextView) findViewById(R.id.operand1);
-        TextView operand2 = (TextView) findViewById(R.id.operand2);
-        EditText answer = (EditText) findViewById(R.id.answer);
+        operand1 = (TextView) findViewById(R.id.operand1);
+        operand2 = (TextView) findViewById(R.id.operand2);
+        answer = (EditText) findViewById(R.id.answer);
 
 
         int firstNumber = Integer.parseInt(operand1.getText().toString());
         int secondNumber = Integer.parseInt((operand2.getText().toString()));
         int ans = Integer.parseInt(answer.getText().toString());
 
-        TextView operator = (TextView)findViewById(R.id.operator);
+        operator = (TextView)findViewById(R.id.operator);
 
         String operatorVal = operator.getText().toString();
 
@@ -66,11 +122,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        operand1.setText("");
-        operand2.setText("");
-        operator.setText("");
-        answer.setText("");
+        generateQuestion();
+        if(quesCount == 10 ){
 
+            operand1.setText("");
+            operand2.setText("");
+            operator.setText("");
+            opEquals.setText("");
+            cbAddition.setEnabled(true);
+            cbSubtration.setEnabled(true);
+            cbAddition.setChecked(false);
+            cbSubtration.setChecked(false);
+            submitAnswer.setEnabled(false);
+            answer.setEnabled(false);
+
+            btnOperation.setVisibility(View.VISIBLE);
+            Toast.makeText(MainActivity.this, "your score is : " + count, Toast.LENGTH_LONG).show();
+            count = 0;
+            quesCount = 0;
+        }
+        answer.setText("");
 
     }
 
