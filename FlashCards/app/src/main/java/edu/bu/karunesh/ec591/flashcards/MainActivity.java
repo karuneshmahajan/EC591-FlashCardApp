@@ -133,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
             cbSubtration.setEnabled(true);
             cbAddition.setChecked(false);
             cbSubtration.setChecked(false);
+            subtraction = false;
+            addition = false;
             submitAnswer.setEnabled(false);
             answer.setEnabled(false);
 
