@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnOperation;
     private Button submitAnswer;
     private CheckBox cbAddition;
-    private CheckBox cbSubtration;
+    private CheckBox cbSubtraction;
     private TextView operand1;
     private TextView operand2;
     private TextView operator;
@@ -35,21 +35,35 @@ public class MainActivity extends AppCompatActivity {
         btnOperation = (Button) findViewById(R.id.btnOperation);
         submitAnswer = (Button) findViewById(R.id.submitAnswer);
         cbAddition = (CheckBox) findViewById(R.id.cbAddition);
-        cbSubtration = (CheckBox) findViewById(R.id.cbSubtraction);
+        cbSubtraction = (CheckBox) findViewById(R.id.cbSubtraction);
+        answer = (EditText) findViewById(R.id.answer);
         submitAnswer.setEnabled(false);
+        btnOperation.setEnabled(false);
+        submitAnswer.setVisibility(View.INVISIBLE);
+        answer.setEnabled(false);
 
+    }
+
+    protected void setOpBtn(View view){
+        if(cbSubtraction.isChecked() || cbAddition.isChecked()){
+            btnOperation.setEnabled(true);
+        }
+        else{
+            btnOperation.setEnabled(false);
+        }
     }
 
     protected void opSubmit(View view){
         if(cbAddition.isChecked()){
             addition = true;
         }
-        if(cbSubtration.isChecked()){
+        if(cbSubtraction.isChecked()){
             subtraction = true;
         }
         cbAddition.setEnabled(false);
-        cbSubtration.setEnabled(false);
+        cbSubtraction.setEnabled(false);
         btnOperation.setVisibility(View.INVISIBLE);
+        submitAnswer.setVisibility(View.VISIBLE);
 
         generateQuestion();
     }
@@ -59,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         operand1 = (TextView) findViewById(R.id.operand1);
         operand2 = (TextView) findViewById(R.id.operand2);
         operator = (TextView)findViewById(R.id.operator);
-        answer = (EditText) findViewById(R.id.answer);
         opEquals.setText("=");
         answer.setEnabled(true);
         submitAnswer.setEnabled(true);
@@ -97,11 +110,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void doSubmit(View view) {
-        quesCount++;
-
         operand1 = (TextView) findViewById(R.id.operand1);
         operand2 = (TextView) findViewById(R.id.operand2);
         answer = (EditText) findViewById(R.id.answer);
+
+        if(answer == null || answer.getText() == null || answer.getText().toString().equals("")){
+            return;
+        }
+        quesCount++;
 
 
         int firstNumber = Integer.parseInt(operand1.getText().toString());
@@ -130,13 +146,15 @@ public class MainActivity extends AppCompatActivity {
             operator.setText("");
             opEquals.setText("");
             cbAddition.setEnabled(true);
-            cbSubtration.setEnabled(true);
+            cbSubtraction.setEnabled(true);
             cbAddition.setChecked(false);
-            cbSubtration.setChecked(false);
+            cbSubtraction.setChecked(false);
             subtraction = false;
             addition = false;
             submitAnswer.setEnabled(false);
             answer.setEnabled(false);
+            btnOperation.setEnabled(false);
+            submitAnswer.setVisibility(View.INVISIBLE);
 
             btnOperation.setVisibility(View.VISIBLE);
             Toast.makeText(MainActivity.this, "your score is : " + count, Toast.LENGTH_LONG).show();

@@ -30,14 +30,16 @@
                 android:layout_height="wrap_content"
                 android:text="Addition"
                 android:id="@+id/cbAddition"
-                android:paddingRight="35dp" />
+                android:paddingRight="35dp"
+                android:onClick="setOpBtn" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Subtraction"
                 android:id="@+id/cbSubtraction"
-                android:paddingRight="80dp" />
+                android:paddingRight="80dp"
+                android:onClick="setOpBtn" />
 
             <Button
                 android:layout_width="wrap_content"
