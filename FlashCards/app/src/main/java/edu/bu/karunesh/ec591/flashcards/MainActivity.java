@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             submitAnswer.setVisibility(View.INVISIBLE);
 
             btnOperation.setVisibility(View.VISIBLE);
-            Toast.makeText(MainActivity.this, "your score is : " + count, Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "your score is : " + count + "out of 10", Toast.LENGTH_LONG).show();
             count = 0;
             quesCount = 0;
         }
